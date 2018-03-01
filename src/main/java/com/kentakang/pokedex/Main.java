@@ -9,20 +9,30 @@ public class Main {
         Scanner s = new Scanner(System.in);
         int n = 0;
 
+        if (dex.dataCheck() == false)
+            dex.dataInit();
+
+        System.out.print("Hi, This is Pokedex Finder\n");
         while (true) {
-            System.out.print("Hi, This is Pokedex Finder : ");
-            n = s.nextInt();
-            if (n < dex.countLines() - 1)
+            System.out.print("Please enter the Pokedex Number : ");
+
+            String str = s.nextLine();
+            if (str.equals("reinit"))
+                dex.dataReInit();
+
+            n = Integer.parseInt(str);
+            if (n < dex.countLines())
                 break;
             else
                 System.out.println("There is no Pokemon for that number.");
         }
+
         String[] type = dex.getType(n);
 
-        System.out.println("Pokemon Info");
-        System.out.println("Pokedex Number : " + n);
-        System.out.println("Name : " + dex.getName(n));
-        System.out.print("Type : ");
+        System.out.print(
+                "Pokemon Info\n" + "Pokedex Number : " + n +
+                        "\nName : " + dex.getName(n) + "\nType : ");
+
         for (int i = 0; i < 2; i++) {
             if (type[i] == null)
                 break;

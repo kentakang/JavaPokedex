@@ -27,7 +27,22 @@ public class DexParser {
             output.write(data.getBytes());
         }
 
+        System.out.println("Pokedex Data is initialized\n");
+
         output.close();
+    }
+
+    public static void dataReInit() throws IOException {
+        File file = new File("pokedex.txt");
+
+        if (!file.delete()) {
+            System.out.println("There was an Error in Re-Initializing the Data\nError : File Delete Failed");
+            System.exit(999);
+        } else {
+            dataInit();
+        }
+
+        System.exit(0);
     }
 
     public static boolean dataCheck() throws IOException {
@@ -52,6 +67,22 @@ public class DexParser {
 
         br.close();
         return cnt;
+    }
+
+    public String[] getList() throws IOException {
+        if (dataCheck() == false)
+            dataInit();
+
+        BufferedReader br = new BufferedReader(new FileReader("pokedex.txt"));
+        String line = "";
+        String[] result = new String[countLines() - 1];
+
+        for (int i = 0; i < result.length; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine(), ",");
+            result[i] = st.nextToken();
+        }
+
+        return result;
     }
 
     public String getName(int n) throws IOException {
